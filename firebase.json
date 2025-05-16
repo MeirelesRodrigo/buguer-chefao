@@ -1,5 +1,4 @@
 {
-  
   "hosting": {
     "site": "chefao-burguer",
     "public": "dist/buguer-chefao",
@@ -7,6 +6,12 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }

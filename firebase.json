@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "chefao-burguer",
-    "public": "dist/buguer-chefao",
+    "public": "dist/buguer-chefao/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

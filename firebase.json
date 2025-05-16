@@ -1,0 +1,12 @@
+{
+  
+  "hosting": {
+    "site": "chefao-burguer",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

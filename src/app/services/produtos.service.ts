@@ -10,10 +10,15 @@ import { Produtos_Response } from '../models/response/produtos.response';
 })
 export class ProdutosService {
   colecaoProdutos: any
+  colecaoPorcoes: any
 
   constructor(
     private firestore: Firestore
-  ) { this.colecaoProdutos = collection(this.firestore, 'produtos') }
+  ) 
+  { 
+    this.colecaoProdutos = collection(this.firestore, 'produtos');
+    this.colecaoPorcoes = collection(this.firestore, 'porcoes');
+   }
 
 
   listarProdutosMenu(): Observable<Produtos_Request[]>{

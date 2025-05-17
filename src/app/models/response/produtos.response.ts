@@ -3,5 +3,6 @@ export interface Produtos_Response{
     Nome: string,
     Descricao: string
     Valor: number,
-    Imagem: string
+    Imagem: string,
+    Categoria: string
 }

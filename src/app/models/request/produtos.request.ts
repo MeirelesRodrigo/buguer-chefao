@@ -3,5 +3,6 @@ export interface Produtos_Request{
     Nome: string,
     Descricao: string
     Valor: number,
-    Imagem: string
+    Imagem: string,
+    Categoria: string
 }

@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './cardapio.component.html',
 })
 export class CardapioComponent implements OnInit {
-  listaProdutos: Produtos_Response[] = []
+  sanduiches: Produtos_Response[] = [];
+  porcoes: Produtos_Response[] = [];
+  bebidas: Produtos_Response[] = [];
 
   constructor(
     private produtosService: ProdutosService
@@ -21,9 +23,10 @@ export class CardapioComponent implements OnInit {
 
   buscarTodosProdutos() {
     this.produtosService.listarProdutosMenu().subscribe(response => {
-      this.listaProdutos = response
-      console.log(this.listaProdutos)
-    })
+      console.log(response)
+      this.sanduiches = response.filter(p => p.Categoria === 'sanduiche');
+      this.porcoes = response.filter(p => p.Categoria === 'porcao');
+      this.bebidas = response.filter(p => p.Categoria === 'bebida');
+    });
   }
-
 }

@@ -6,7 +6,6 @@ import { CardapioComponent } from "../../components/cardapio/cardapio.component"
   selector: 'app-main-page',
   imports: [BannerComponent, CardapioComponent],
   templateUrl: './main-page.component.html',
-  styleUrl: './main-page.component.css'
 })
 export class MainPageComponent {
 

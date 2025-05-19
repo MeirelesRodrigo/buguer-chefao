@@ -1,0 +1,30 @@
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+    <div class="p-4 flex flex-col sm:flex-row items-center rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+        *ngFor="let mesa of mesasDisponiveis" (click)="abrirModalMesas(mesa.numero)">
+        <img class="max-w-3 mr-2" src="receipt-solid.svg">
+        <p>
+            Mesa: {{ mesa.numero }}
+        </p>
+    </div>
+</section>
+
+<p-dialog header="Mesa {{mesaSelecionada}}" [modal]="true" [(visible)]="modalAberta">
+
+    <div class="card flex justify-center">
+        <p-accordion>
+            <p-accordion-panel value="0">
+                <p-accordion-header>Adicionar Produtos</p-accordion-header>
+                <p-accordion-content>
+                    <div class="flex" *ngFor="let menu of menuCarregado">
+                        <p>{{menu.Nome}}</p>            
+                        <p class="font-bold ml-2">R$ {{menu.Valor}},00</p>            
+                    </div>
+                </p-accordion-content>
+            </p-accordion-panel>
+        </p-accordion>
+    </div>
+
+    <hr>
+    <p class="mt-2">Comanda</p>
+    <p>ITENS CONSUMIDOS</p>
+</p-dialog>

@@ -1,0 +1,33 @@
+<section>
+    <h1>Mesa: {{ codigoMesa }}</h1>
+    
+    <p-accordion>
+        <p-accordion-panel value="0">
+            <p-accordion-header>Adicionar Produtos</p-accordion-header>
+            <p-accordion-content>
+                <div *ngFor="let menu of menuCarregado" class="flex justify-between items-center mb-2 border-b p-2">
+                    <div>
+                        <p>{{ menu.Nome }}</p>
+                        <p class="text-sm text-gray-500">R$ {{ menu.Valor }}</p>
+                    </div>
+                    <button (click)="adicionarProduto(menu)" class="bg-blue-500 text-white px-3 py-1 rounded">
+                        Adicionar
+                    </button>
+                </div>
+            </p-accordion-content>
+        </p-accordion-panel>
+    </p-accordion>
+
+    <div class="card mt-6">
+        <h2 class="text-lg font-bold mb-2">Produtos Consumidos</h2>
+        <div *ngIf="produtosConsumidos.length > 0; else vazio">
+            <div *ngFor="let produto of produtosConsumidos" class="border-b py-2 flex justify-between">
+                <span>{{ produto.nome }} (x{{ produto.quantidade }})</span>
+                <span>R$ {{ produto.valor * produto.quantidade }}</span>
+            </div>
+        </div>
+        <ng-template #vazio>
+            <p class="text-gray-500">Nenhum produto consumido.</p>
+        </ng-template>
+    </div>
+</section>

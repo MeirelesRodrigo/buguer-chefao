@@ -1,33 +1,60 @@
-<section>
-    <h1>Mesa: {{ codigoMesa }}</h1>
-    
-    <p-accordion>
-        <p-accordion-panel value="0">
-            <p-accordion-header>Adicionar Produtos</p-accordion-header>
-            <p-accordion-content>
-                <div *ngFor="let menu of menuCarregado" class="flex justify-between items-center mb-2 border-b p-2">
-                    <div>
-                        <p>{{ menu.Nome }}</p>
-                        <p class="text-sm text-gray-500">R$ {{ menu.Valor }}</p>
-                    </div>
-                    <button (click)="adicionarProduto(menu)" class="bg-blue-500 text-white px-3 py-1 rounded">
-                        Adicionar
-                    </button>
-                </div>
-            </p-accordion-content>
-        </p-accordion-panel>
-    </p-accordion>
+<section class="p-4">
+  <h1 class="text-xl font-bold mb-4">Mesa: {{ codigoMesa }}</h1>
 
-    <div class="card mt-6">
-        <h2 class="text-lg font-bold mb-2">Produtos Consumidos</h2>
-        <div *ngIf="produtosConsumidos.length > 0; else vazio">
-            <div *ngFor="let produto of produtosConsumidos" class="border-b py-2 flex justify-between">
-                <span>{{ produto.nome }} (x{{ produto.quantidade }})</span>
-                <span>R$ {{ produto.valor * produto.quantidade }}</span>
-            </div>
+  <p-accordion>
+    <p-accordion-panel value="0">
+      <p-accordion-header>Adicionar Produtos</p-accordion-header>
+      <p-accordion-content>
+        <div *ngFor="let menu of menuCarregado"
+             class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 border-b p-2 gap-2">
+          <div>
+            <p class="text-base font-medium">{{ menu.Nome }}</p>
+            <p class="text-sm text-black font-bold">R$ {{ menu.Valor }}</p>
+          </div>
+          <button (click)="adicionarProduto(menu)"
+                  class="bg-green-400 text-white px-3 py-1 rounded w-full sm:w-auto hover:bg-green-500 transition">
+            <i class="pi pi-plus"></i>
+          </button>
         </div>
-        <ng-template #vazio>
-            <p class="text-gray-500">Nenhum produto consumido.</p>
-        </ng-template>
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
+
+  <div class="card mt-6 px-2 sm:px-4">
+    <h2 class="text-lg font-bold mb-4">Produtos Consumidos</h2>
+
+    <div *ngIf="produtosConsumidos.length > 0; else vazio" class="space-y-4">
+      <div *ngFor="let produto of produtosConsumidos"
+           class="flex flex-col sm:flex-row sm:items-center border-b border-gray-200 pb-3 sm:pb-2 gap-2">
+
+        <button (click)="removerProduto(produto)"
+                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition
+                       self-start sm:self-auto flex-shrink-0">
+          Remover
+        </button>
+
+        <div class="flex-1">
+          <p class="text-base font-medium">{{ produto.nome }}</p>
+          <div class="flex justify-between sm:justify-start sm:gap-8 mt-1 text-sm text-gray-700">
+            <span>Qtd: {{ produto.quantidade }}</span>
+            <span>Unit: R$ {{ produto.valor }}</span>
+            <span>Total: R$ {{ produto.valor * produto.quantidade }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex justify-between font-bold bg-gray-50 p-3 rounded mt-4">
+        <div>Total:</div>
+        <div>R$ {{ totalMesa }}</div>
+      </div>
+
     </div>
+
+    <ng-template #vazio>
+      <p class="text-gray-500 mt-4">Nenhum produto consumido.</p>
+    </ng-template>
+  </div>
 </section>
+
+<p-toast></p-toast>

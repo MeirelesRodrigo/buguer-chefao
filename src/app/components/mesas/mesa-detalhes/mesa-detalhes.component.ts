@@ -5,11 +5,14 @@ import { AccordionModule } from 'primeng/accordion';
 import { ProdutosService } from '../../../services/produtos/produtos.service';
 import { MesasService } from '../../../services/mesas/mesas.service';
 import { ProdutoConsumido } from '../../../models/request/produtos-consumidos.request';
+import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-mesa-detalhes',
-  imports: [CommonModule, AccordionModule],
+  imports: [CommonModule, AccordionModule, Toast],
   templateUrl: './mesa-detalhes.component.html',
+  providers: [MessageService]
 })
 export class MesaDetalhesComponent {
 
@@ -20,7 +23,8 @@ export class MesaDetalhesComponent {
   constructor(
     private activeRoute: ActivatedRoute,
     private produtosService: ProdutosService,
-    private mesaService: MesasService
+    private mesaService: MesasService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -30,7 +34,6 @@ export class MesaDetalhesComponent {
       this.produtosService.listarProdutosMenu().subscribe(resp => {
         this.menuCarregado = resp;
       });
-
       this.carregarProdutosConsumidos();
     });
   }
@@ -45,14 +48,36 @@ export class MesaDetalhesComponent {
 
     this.mesaService.adicionarProdutosMesa(this.codigoMesa, produto)
       .then(() => {
-        this.carregarProdutosConsumidos(); // Recarrega após adicionar
+        this.mensagemProdutoAdd(produto.nome);
+        this.carregarProdutosConsumidos();
       });
   }
 
   carregarProdutosConsumidos() {
     this.mesaService.listarProdutosConsumidos(this.codigoMesa)
       .subscribe(produtos => {
-        this.produtosConsumidos = produtos;
+        this.produtosConsumidos = produtos.sort((a, b) => a.nome.localeCompare(b.nome));
       });
+  }
+
+  get totalMesa(): number {
+    return this.produtosConsumidos.reduce((total, item) => {
+      return total + (item.valor * item.quantidade);
+    }, 0);
+  }
+
+  removerProduto(produto: ProdutoConsumido) {
+    this.mesaService.removerProdutoMesa(this.codigoMesa, produto)
+      .then(() =>
+        this.carregarProdutosConsumidos()
+      );
+    this.mensagemProdutoExc(produto.nome)
+  }
+
+  mensagemProdutoAdd(produto: any) {
+    this.messageService.add({ severity: 'success', summary: 'Sucesso!', detail: `Produto ${produto} adicionado` });
+  }
+  mensagemProdutoExc(produto: any) {
+    this.messageService.add({ severity: 'warn', summary: 'Atenção!', detail: `Produto ${produto} removido` });
   }
 }
